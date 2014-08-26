@@ -17,7 +17,7 @@
 # Generate the ?d=retro part of a libravatar
 #
 # For any hash function:
-#   - The first char indicates if background and foreground will be inveted;
+#   - The first char indicates if background and foreground will be inverted;
 #   - The second char indicates which color to use as foreground;
 #   - The following 15 chars indicate if the pixel is background or foreground;
 #   - The fourth line mirror the second;
