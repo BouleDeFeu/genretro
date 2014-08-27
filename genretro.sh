@@ -34,10 +34,21 @@ usage() {
 }
 
 _md5() {
-	if which md5 > /dev/null; then
+	if which md5 2> /dev/null > /dev/null; then
 		md5 -qs $1
 	else
 		echo -n $1 | md5sum | cut -d' ' -f1
+	fi
+}
+
+_enum() {
+	_first="$1"
+	_last="$2"
+
+	if which jot 2> /dev/null > /dev/null; then
+		jot $_last $_first $_last 1
+	else
+		seq $_first 1 $((  $_last - 1 ))
 	fi
 }
 
@@ -128,7 +139,7 @@ done
 # Draw a border around the avatar using either the backgound or
 # foreground color depending on the inverted char
 emptyline='"'
-for i in `jot 24 0 24 1`; do
+for i in `_enum 0 24`; do
 	emptyline="$emptyline$fchar"
 done
 emptyline="$emptyline\","
