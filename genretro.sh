@@ -33,6 +33,14 @@ usage() {
         echo "usage: $PROGNAME email"
 }
 
+_md5() {
+	if which md5 > /dev/null; then
+		md5 -qs $1
+	else
+		echo -n $1 | md5sum | cut -d' ' -f1
+	fi
+}
+
 iseven() {
 	echo `printf "%d" \'$1` % 2 | bc
 }
@@ -85,7 +93,7 @@ fi
 
 set -u
 
-hashedtext="`md5 -qs $input`"
+hashedtext="`_md5 $input`"
 
 bcolor="#E0E0E0"
 fcolor=$( colorscheme `substr $hashedtext 2 1` )
