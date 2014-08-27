@@ -104,12 +104,12 @@ fi
 
 set -u
 
-hashedtext="`_md5 $input`"
+hashedtext="`_md5 $input | sed s/./\&\ /g`"
 
 bcolor="#E0E0E0"
-fcolor=$( colorscheme `substr $hashedtext 2 1` )
+fcolor=$( colorscheme `echo $hashedtext | cut -d' ' -f2` )
 fchar='#'
-if [ $( iseven `substr $hashedtext 1 1` ) -eq 1 ]; then
+if [ $( iseven `echo $hashedtext | cut -d' ' -f1` ) -eq 1 ]; then
 	tmp="$fcolor"
 	fcolor="$bcolor"
 	bcolor="$tmp"
@@ -122,7 +122,7 @@ line1=''
 line2=''
 line3=''
 while [ $nline -lt 3 ]; do
-	char="`substr $hashedtext $j 1`"
+	char="`echo $hashedtext | cut -d' ' -f$j`"
 	char="`iscolored $char`"
 	case $nline in
 		0) line1="$line1$char$char$char$char";;
