@@ -58,13 +58,13 @@ iseven() {
 
 colorscheme() {
 	case "$1" in
-		a|b|c|v|w) echo "#2D4FFF";;
-		d|e|f|x|y) echo "#FEB42C";;
-		g|h|i|z|0) echo "#E279EA";;
-		j|k|l|1|2) echo "#1EB3FD";;
-		m|n|o|3|4) echo "#E84D41";;
-		p|q|r|5|6) echo "#31CB73";;
-		s|t|u|7|8|9) echo "#8D45AA";;
+		a|b|c|v|w) echo "#FFA263";;
+		d|e|f|x|y) echo "#FF8939";;
+		g|h|i|z|0) echo "#FF7619";;
+		j|k|l|1|2) echo "#FF6700";;
+		m|n|o|3|4) echo "#C55000";;
+		p|q|r|5|6) echo "#9B3F00";;
+		s|t|u|7|8|9) echo "#6B2B00";;
 	esac
 }
 
