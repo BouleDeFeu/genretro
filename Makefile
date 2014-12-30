@@ -1,11 +1,10 @@
 SCRIPT= genretro.sh
-MAN= genretro.1
+PROG= ${SCRIPT:R}
 
-BINDIR?= bin
-DESTDIR?= /usr/local/
+BINDIR?= /usr/local/bin
 
-install:
+install: maninstall
 	${INSTALL} ${INSTALL_COPY} -o ${BINOWN} -g ${BINGRP} -m ${BINMODE} \
-		${.CURDIR}/${SCRIPT} ${DESTDIR}${BINDIR}/genretro
+		${.CURDIR}/${SCRIPT} ${BINDIR}/${PROG}
 
 .include <bsd.prog.mk>
