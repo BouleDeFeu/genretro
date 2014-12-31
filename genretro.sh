@@ -39,7 +39,7 @@ while getopts ":" opt;do
 	case $opt in
 		:) echo "$PROGNAME: option requires an argument -- $OPTARG";
 		   usage; exit 1;;	# NOTREACHED
-		?) echo "$PROGNAME: unkown option -- $OPTARG";
+		\?) echo "$PROGNAME: unkown option -- $OPTARG";
 		   usage; exit 1;;	# NOTREACHED
 		*) usage; exit 1;;	# NOTREACHED
 	esac
