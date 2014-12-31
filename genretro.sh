@@ -47,7 +47,7 @@ done
 shift $(( $OPTIND -1 ))
 
 if [ -z "$1" ]; then
-	echo "$PROGNAME: email address expected"
+	echo "$PROGNAME: hashed text expected"
 	usage
 	exit 1
 else
