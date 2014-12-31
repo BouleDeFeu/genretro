@@ -33,49 +33,6 @@ usage() {
         echo "usage: $PROGNAME email"
 }
 
-_md5() {
-	if which md5 2> /dev/null > /dev/null; then
-		md5 -qs $1
-	else
-		echo -n $1 | md5sum | cut -d' ' -f1
-	fi
-}
-
-_enum() {
-	_first="$1"
-	_last="$2"
-
-	if which jot 2> /dev/null > /dev/null; then
-		jot $_last $_first $_last 1
-	else
-		seq $_first 1 $((  $_last - 1 ))
-	fi
-}
-
-iseven() {
-	echo `printf "%d" \'$1` % 2 | bc
-}
-
-colorscheme() {
-	case "$1" in
-		a|b|c|v|w) echo "#FFA263";;
-		d|e|f|x|y) echo "#FF8939";;
-		g|h|i|z|0) echo "#FF7619";;
-		j|k|l|1|2) echo "#FF6700";;
-		m|n|o|3|4) echo "#C55000";;
-		p|q|r|5|6) echo "#9B3F00";;
-		s|t|u|7|8|9) echo "#6B2B00";;
-	esac
-}
-
-iscolored() {
-	if [ `iseven $1` -eq 0 ]; then
-		echo '#'
-	else
-		echo ' '
-	fi
-}
-
 while getopts ":" opt;do
 	case $opt in
 		:) echo "$PROGNAME: option requires an argument -- $OPTARG";
@@ -103,6 +60,67 @@ if [ $# -ge 1 ]; then
 fi
 
 set -u
+
+_md5() {
+	set +u
+	_input="$1"
+	set -u
+
+	if which md5 2> /dev/null > /dev/null; then
+		md5 -qs $_input
+	else
+		echo -n $_input | md5sum | cut -d' ' -f1
+	fi
+}
+
+_enum() {
+	set +u
+	_first="$1"
+	_last="$2"
+	set -u
+
+	if which jot 2> /dev/null > /dev/null; then
+		jot $_last $_first $_last 1
+	else
+		seq $_first 1 $((  $_last - 1 ))
+	fi
+}
+
+iseven() {
+	set +u
+	_char="$1"
+	set -u
+
+	echo `printf "%d" \'$_char` % 2 | bc
+}
+
+colorscheme() {
+	set +u
+	_char="$1"
+	set -u
+
+	case "$_char" in
+		a|b|c|v|w) echo "#FFA263";;
+		d|e|f|x|y) echo "#FF8939";;
+		g|h|i|z|0) echo "#FF7619";;
+		j|k|l|1|2) echo "#FF6700";;
+		m|n|o|3|4) echo "#C55000";;
+		p|q|r|5|6) echo "#9B3F00";;
+		s|t|u|7|8|9) echo "#6B2B00";;
+	esac
+}
+
+iscolored() {
+	set +u
+	_char="$1"
+	set -u
+
+	if [ `iseven $_char` -eq 0 ]; then
+		echo '#'
+	else
+		echo ' '
+	fi
+}
 
 hashedtext="`_md5 $input | sed s/./\&\ /g`"
 
