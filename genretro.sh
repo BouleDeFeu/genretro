@@ -33,6 +33,8 @@ usage() {
         echo "usage: $PROGNAME email"
 }
 
+input=""
+
 while getopts ":" opt;do
 	case $opt in
 		:) echo "$PROGNAME: option requires an argument -- $OPTARG";
@@ -60,18 +62,6 @@ if [ $# -ge 1 ]; then
 fi
 
 set -u
-
-_md5() {
-	set +u
-	_input="$1"
-	set -u
-
-	if which md5 2> /dev/null > /dev/null; then
-		md5 -qs $_input
-	else
-		echo -n $_input | md5sum | cut -d' ' -f1
-	fi
-}
 
 _enum() {
 	set +u
@@ -122,12 +112,12 @@ iscolored() {
 	fi
 }
 
-hashedtext="`_md5 $input | sed s/./\&\ /g`"
+input="`echo $input | sed s/./\&\ /g`"
 
 bcolor="#E0E0E0"
-fcolor=$( colorscheme `echo $hashedtext | cut -d' ' -f2` )
+fcolor=$( colorscheme `echo $input | cut -d' ' -f2` )
 fchar='#'
-if [ $( iseven `echo $hashedtext | cut -d' ' -f1` ) -eq 1 ]; then
+if [ $( iseven `echo $input | cut -d' ' -f1` ) -eq 1 ]; then
 	tmp="$fcolor"
 	fcolor="$bcolor"
 	bcolor="$tmp"
@@ -140,7 +130,7 @@ line1=''
 line2=''
 line3=''
 while [ $nline -lt 3 ]; do
-	char="`echo $hashedtext | cut -d' ' -f$j`"
+	char="`echo $input | cut -d' ' -f$j`"
 	char="`iscolored $char`"
 	case $nline in
 		0) line1="$line1$char$char$char$char";;
